@@ -1,0 +1,19 @@
+<div class="col-md-4 d-flex flex-column full-height-md">
+    <div class="container-item container-2 flex-fill">
+      <div class="container-title">
+        Required Calories Intake
+      </div>
+      <div class="container-content">
+        <div>
+          <h3>Total Calories Intake: {{ totalCalories }} kcal</h3>
+          <div *ngFor="let meal of ['Breakfast', 'Lunch', 'Dinner', 'Snacks']">
+            <button (click)="navigateToMealDetails(meal)">
+              {{ meal }}: {{ mealCalories[meal] }} kcal
+            </button>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

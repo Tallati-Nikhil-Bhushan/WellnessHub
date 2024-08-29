@@ -25,9 +25,9 @@ export class AppComponent implements OnInit{
   }
 
   checkAuthStatus(): void {
-    this.authService.isAuthenticated().subscribe(authenticated => {
-      this.isAuthenticated = authenticated;
-    });
+    if(this.authService.isAuthenticated()){
+      this.isAuthenticated = true;
+    };
   }
 
   logout(): void {

@@ -1,87 +1,74 @@
 html, body {
-    height: 100%; /* Ensure the body takes full height */
+    height: 100%;
     margin: 0;
+    background-color: #f4f4f4; /* Set a light background color */
 }
+
 .wrapper {
     display: flex;
     flex-direction: column;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
 }
-.navbar-custom {
-    background-color: #374244;
+
+.container-fluid {
+    padding: 0;
 }
-.navbar-brand {
-    font-size: 1.5rem;
-    color: #b5cbd7;
+
+.row {
+    margin: 0;
 }
-.btn-logout {
-    background-color: #dc3545;
-    color: white;
-    border: none;
-}
-.btn-logout:hover {
-    background-color: #c82333;
-}
-.main-content {
-    flex: 1; /* Takes up the remaining space */
+
+.col-md-4 {
     display: flex;
-    flex-direction: row;
-    overflow: hidden; /* Prevent scrollbars */
+    flex-direction: column;
+    height: 100%;
 }
+
 .container-item {
     display: flex;
-    flex-direction: column; /* Stack title and content vertically */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     color: white;
     padding: 20px;
     text-align: center;
 }
+
+.container-1, .container-2, .container-3 {
+    background-color: #b5cbd7; /* Ensure the background color is applied */
+}
+
 .container-title {
     font-size: 1.5rem;
-    margin-bottom: 10px; /* Space between title and content */
+    margin-bottom: 10px;
 }
+
 .container-content {
     font-size: 1rem;
     width: 100%;
 }
-.progress-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
-}
 
-.progress-label {
-    font-size: 1.25rem;
-}
-
-.progress-target {
-    font-size: 1rem;
-    color: #f8f9fa;
-}
-
-.progress {
-    width: 100%;
-    height: 30px;
-}
 .container-1 { background-color: #b5cbd7; }
 .container-2 { background-color: #b5cbd7; }
 .container-3 { background-color: #b5cbd7; }
+
 @media (max-width: 767.98px) {
     .container-item {
         padding: 10px; /* Adjust padding for smaller screens */
     }
+
     .container-title {
         font-size: 1.25rem; /* Adjust font size for smaller screens */
     }
+
     .container-content {
         font-size: 0.875rem; /* Adjust font size for smaller screens */
     }
+
     .steps-range {
         font-size: 1rem;
     }
+
     .progress {
         height: 25px;
     }

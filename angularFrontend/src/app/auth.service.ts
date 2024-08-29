@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
@@ -10,27 +10,41 @@ export class AuthService {
 
   private apiUrl = 'http://localhost:8081/api';  // Your Spring Boot backend URL
 
+  private loggedIn = new BehaviorSubject<boolean>(this.isAuthenticated());
+
+  isLoggedIn = this.loggedIn.asObservable();
+
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
+  }
 
   register(user: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, user);
   }
 
-  login(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials);
+  login(loginData: any): Observable<void> {
+    return this.http.post<{ token: string, userId:string}>(`${this.apiUrl}/login`, loginData).pipe(
+      map(response => {
+        // Store the JWT token in local storage
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('userId', response.userId);
+        this.loggedIn.next(true);
+      })
+    );
   }
 
-  isAuthenticated(): Observable<boolean> {
-    const token = localStorage.getItem('token');
-    if (token && !this.jwtHelper.isTokenExpired(token)) {
-      return of(true);
-    } else {
-      return of(false);
-    }
-  }
-
-  logout(): void {
+  // To log out the user
+  logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    this.loggedIn.next(false);
+  }
+
+  // To get the JWT token from local storage
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
   checkUsername(username: string): Observable<any> {

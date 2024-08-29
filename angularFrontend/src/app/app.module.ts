@@ -12,6 +12,10 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthInterceptor } from './auth.interceptor';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './navbar/navbar.component';
+import { DietComponent } from './diet/diet.component';
+import { MealDetailsComponent } from './meal-details/meal-details.component';
+import { FitnessComponent } from './fitness/fitness.component';
+import { MentalHealthComponent } from './mental-health/mental-health.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -24,7 +28,11 @@ export function tokenGetter() {
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    NavbarComponent
+    NavbarComponent,
+    DietComponent,
+    MealDetailsComponent,
+    FitnessComponent,
+    MentalHealthComponent
   ],
   imports: [
     HttpClientModule,
