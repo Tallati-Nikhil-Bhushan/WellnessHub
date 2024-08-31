@@ -1,0 +1,31 @@
+.container-item {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .container-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .container-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .fitness-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .calories-summary {
+    margin-bottom: 20px;
+  }
+  
+  .actions button {
+    margin-right: 10px;
+  }
+  
