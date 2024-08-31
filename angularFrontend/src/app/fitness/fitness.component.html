@@ -1,22 +1,23 @@
 <div class="container-item container-1 flex-fill">
-    <div class="container-title">
-      Calories Burned
-    </div>
-    <div class="container-content">
-      <div class="progress-container">
-        <span class="progress-label">Steps Covered</span>
-        <span class="progress-target">{{ targetSteps }} Steps</span>
+  <div class="container-title">
+    Calories Burned
+  </div>
+  <div class="container-content">
+    <div class="fitness-container">
+      <div class="calories-summary">
+        <h2>Calories Burned</h2>
+        <div>
+          <p>Last 30 Days: {{ caloriesLast30Days }} kcal</p>
+          <p>Last 7 Days: {{ caloriesLast7Days }} kcal</p>
+          <p>Yesterday: {{ caloriesLastDay }} kcal</p>
+          <p>Today: {{ caloriesToday }} kcal</p>
+        </div>
       </div>
-      <div class="progress">
-        <!-- <div class="progress-bar"
-             role="progressbar"
-             [ngStyle]="{'width': progressBarWidth}"
-             aria-valuenow="{{ stepsCovered }}"
-             aria-valuemin="0"
-             aria-valuemax="{{ targetSteps }}">
-          {{ stepsCovered }} Steps
-        </div> -->
+
+      <div class="actions">
+        <button (click)="navigateToAddActivity()">Add Activity</button>
+        <button (click)="showActivityHistory()">Show Activity History</button>
       </div>
     </div>
   </div>
-  
+</div>

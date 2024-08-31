@@ -60,13 +60,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(@RequestBody User user) {
-        Map<String, String> response = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> login(@RequestBody User user) {
+        Map<String, Object> response = new HashMap<>();
         
         if (userService.authenticate(user.getUsername(), user.getPassword())) {
             String token = jwtService.generateToken(user.getUsername());
             response.put("token", token); // Include the token in the response
-            response.put("userId",user.getId().toString());
+            response.put("user",userService.getUserByUsername(user.getUsername()));
             return ResponseEntity.ok(response);
         } else {
             response.put("error", "Invalid credentials");

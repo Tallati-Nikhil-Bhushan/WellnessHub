@@ -1,23 +1,33 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
-  constructor(private authService: AuthService) {}
+  constructor(private router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.authService.getToken();
+    const token = localStorage.getItem('token');
+    
+    let cloned = req;
     if (token) {
-      const cloned = req.clone({
+      cloned = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${token}`)
       });
-      return next.handle(cloned);
-    } else {
-      return next.handle(req);
     }
+
+    return next.handle(cloned).pipe(
+      catchError(error => {
+        if (error.status === 401) {
+          // Token might be expired, redirect to login
+          this.router.navigate(['/login']);
+        }
+        throw error;
+      })
+    );
   }
 }
 

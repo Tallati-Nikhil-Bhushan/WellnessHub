@@ -10,13 +10,21 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.DietPlanner.model.Diet;
 import com.example.DietPlanner.service.DietService;
+import com.example.DietPlanner.service.MealOptionsService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/DietPlanner/api/diets")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DietController {
 
     @Autowired
     private DietService dietService;
+    
+    @Autowired
+    MealOptionsService mealOptionsService;
 
     @PostMapping
     public ResponseEntity<Diet> createDiet(@RequestBody Diet diet) {
@@ -41,5 +49,35 @@ public class DietController {
         Map<String, Integer> mealCalories = dietService.getCaloriesByMeals(userId);
         return new ResponseEntity<>(mealCalories, HttpStatus.OK);
     }
+    
+    @GetMapping("/meals/{mealType}")
+    public ResponseEntity<String> getMealOptions(
+            @PathVariable String mealType,
+            @RequestParam("calories") int calories,
+            @RequestParam("dietaryPreference") String dietaryPreference) {
+        
+        // Call service method with parameters and get HTML response
+    	String jsonResponse = mealOptionsService.getMealOptionsJson(calories, dietaryPreference, mealType);
+
+        // Extract the HTML content from the JSON response
+        String htmlContent = extractHtmlFromJson(jsonResponse);
+
+        return new ResponseEntity<>(htmlContent, HttpStatus.OK);
+    }
+    
+    private String extractHtmlFromJson(String jsonResponse) {
+        try {
+            // Assuming jsonResponse is in a format like the one you provided
+            JsonNode rootNode = new ObjectMapper().readTree(jsonResponse);
+            JsonNode textNode = rootNode.path("candidates").get(0)
+                                        .path("content").path("parts").get(0)
+                                        .path("text");
+            return textNode.asText();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "Error parsing response";
+        }
+    }
+
 }
 

@@ -11,6 +11,13 @@ export class DietComponent implements OnInit {
   totalCalories: number = 0;
   mealCalories: { [key: string]: number } = {};
 
+  vegPreference: any = {
+    Breakfast: false,
+    Lunch: false,
+    Dinner: false,
+    Snacks: false
+  };
+
   constructor(private dietService: DietService, private router: Router) {}
 
   ngOnInit(): void {
@@ -31,7 +38,19 @@ export class DietComponent implements OnInit {
     });
   }
 
-  navigateToMealDetails(meal: string): void {
-    this.router.navigate([`/meal-details/${meal}`]);
+  navigateToMealDetails(mealType: string): void {
+    const calories = this.mealCalories[mealType];
+    const dietaryPreference = this.vegPreference[mealType] ? 'vegetarian' : '';
+
+    this.router.navigate(['/meal-details', mealType], {
+      queryParams: {
+        calories: calories,
+        dietaryPreference: dietaryPreference
+      }
+    });
+  }
+
+  toggleVegetarian(mealType: string): void {
+    this.vegPreference[mealType] = !this.vegPreference[mealType];
   }
 }

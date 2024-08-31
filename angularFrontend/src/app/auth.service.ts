@@ -25,11 +25,13 @@ export class AuthService {
   }
 
   login(loginData: any): Observable<void> {
-    return this.http.post<{ token: string, userId:string}>(`${this.apiUrl}/login`, loginData).pipe(
+    return this.http.post<{ token: string, user: any}>(`${this.apiUrl}/login`, loginData).pipe(
       map(response => {
         // Store the JWT token in local storage
         localStorage.setItem('token', response.token);
-        localStorage.setItem('userId', response.userId);
+        localStorage.setItem('userId', response.user.id);
+        localStorage.setItem('user', JSON.stringify(response.user));
+        console.log(JSON.parse(localStorage.getItem('user') || '{}'));
         this.loggedIn.next(true);
       })
     );
@@ -39,6 +41,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    localStorage.removeItem('user');
     this.loggedIn.next(false);
   }
 

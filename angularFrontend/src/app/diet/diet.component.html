@@ -1,11 +1,11 @@
-<div class="col-md-4 d-flex flex-column full-height-md">
+<!-- <div class="col-md-4 d-flex flex-column full-height-md">
     <div class="container-item container-2 flex-fill">
       <div class="container-title">
         Required Calories Intake
       </div>
       <div class="container-content">
         <div>
-          <h3>Total Calories Intake: {{ totalCalories }} kcal</h3>
+          <h2>{{ totalCalories }} kcal</h2>
           <div *ngFor="let meal of ['Breakfast', 'Lunch', 'Dinner', 'Snacks']">
             <button (click)="navigateToMealDetails(meal)">
               {{ meal }}: {{ mealCalories[meal] }} kcal
@@ -15,5 +15,33 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+  <div class="col-md-4 d-flex flex-column h-100">
+    <div class="card flex-fill w-100 mb-3">
+      <div class="card-header bg-primary text-white">
+        Required Calories Intake
+      </div>
+      <div class="card-body">
+        <div>
+          <h2 class="text-center">{{ totalCalories }} kcal</h2>
+          <div *ngFor="let meal of ['Breakfast', 'Lunch', 'Dinner', 'Snacks']" class="mb-3">
+            <div class="form-check">
+              <input type="checkbox" [(ngModel)]="vegPreference[meal]" class="form-check-input" id="veg-{{ meal }}">
+              <label class="form-check-label" for="veg-{{ meal }}">
+                Vegetarian
+              </label>
+            </div>
+            <button (click)="navigateToMealDetails(meal)" class="btn btn-info w-100 mt-2">
+              {{ meal }}: {{ mealCalories[meal] }} kcal
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  
+  
+  
+  
   

@@ -36,7 +36,6 @@ server:
 
 eureka:
   client:
-  #to regsiter this service Service Discovery
     registerWithEureka: true
     fetchRegistry: true
     serviceUrl:

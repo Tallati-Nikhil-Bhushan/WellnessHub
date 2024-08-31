@@ -2,6 +2,9 @@ package com.example.wellnesshub.service;
 
 import com.example.wellnesshub.model.User;
 import com.example.wellnesshub.repository.UserRepository;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,5 +37,14 @@ public class UserService {
 
     public boolean existsByUsername(String username) {
         return userRepository.existsByUsername(username);
+    }
+    
+    public User getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            return user;
+        } else {
+            throw new RuntimeException("User not found with username: " + username);
+        }
     }
 }

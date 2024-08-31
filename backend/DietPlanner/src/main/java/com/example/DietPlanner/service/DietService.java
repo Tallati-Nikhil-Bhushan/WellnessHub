@@ -44,6 +44,7 @@ public class DietService {
 
         // Create a map to return meal calorie distribution
         Map<String, Integer> meals = new HashMap<>();
+        meals.put("totalCalories", totalCalories);
         meals.put("Lunch", lunchAndDinner);
         meals.put("Dinner", lunchAndDinner);
         meals.put("Breakfast", breakfast);

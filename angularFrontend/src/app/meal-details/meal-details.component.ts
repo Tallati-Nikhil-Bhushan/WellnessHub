@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,12 +7,42 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './meal-details.component.html',
   styleUrls: ['./meal-details.component.css']
 })
-export class MealDetailsComponent {
-  meal: string | null = '';
+export class MealDetailsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) {}
+  mealDetailsHtml: string | undefined;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+
 
   ngOnInit(): void {
-    this.meal = this.route.snapshot.paramMap.get('meal');
+    this.route.paramMap.subscribe(params => {
+      const mealType = params.get('mealType');
+      this.route.queryParams.subscribe(queryParams => {
+        const calories = queryParams['calories'];
+        const dietaryPreference = queryParams['dietaryPreference'];
+
+        if (mealType) {
+          this.fetchMealDetails(mealType, calories, dietaryPreference);
+        }
+      });
+    });
+  }
+
+
+  fetchMealDetails(mealType: string, calories: number, dietaryPreference: string): void {
+    this.http.get(`http://localhost:8082/DietPlanner/api/diets/meals/${mealType}`, {
+      params: {
+        calories: calories.toString(),
+        dietaryPreference: dietaryPreference
+      },
+      responseType: 'text'  // Expecting plain text (HTML) response
+    }).subscribe(
+      response => {
+        this.mealDetailsHtml = response;
+      },
+      error => {
+        console.error('Error fetching meal details', error);
+      }
+    );
   }
 }
