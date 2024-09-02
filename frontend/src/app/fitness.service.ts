@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FitnessService {
-  private apiUrl = 'http://localhost:8083/api/fitness';
+  private apiUrl = 'http://localhost:8081/fitness/api';
 
   constructor(private http: HttpClient) {}
 
@@ -24,5 +24,30 @@ export class FitnessService {
 
   getCaloriesBurnedToday(userId: string): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/${userId}/calories-burned/today`);
+  }
+
+  getActivityHistory(): Observable<any[]> {
+    let userId = localStorage.getItem("userId"); 
+    return this.http.get<any[]>(`${this.apiUrl}/activity-history/${userId}`);
+  }
+
+  getTop10DatesByCaloriesBurned(): Observable<any[]> {
+    let userId = localStorage.getItem("userId");
+    return this.http.get<any[]>(`${this.apiUrl}/top-10-dates/${userId}`);
+  }
+
+  getLast10DaysActivity(): Observable<any> {
+    let userId = localStorage.getItem("userId");
+    return this.http.get<any>(`${this.apiUrl}/last-10-days/${userId}`);
+  }
+
+  getTopActivities(): Observable<any[]> {
+    let userId = localStorage.getItem("userId");
+    return this.http.get<any[]>(`${this.apiUrl}/top-activities/${userId}`);
+  }
+
+  getCaloriesToBeBurned(): Observable<any> {
+    let userId = localStorage.getItem("userId");
+    return this.http.get(`${this.apiUrl}/caloriesToBeBurned/${userId}`);
   }
 }

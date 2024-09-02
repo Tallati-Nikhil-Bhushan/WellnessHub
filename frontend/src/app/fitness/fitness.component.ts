@@ -13,6 +13,7 @@ export class FitnessComponent implements OnInit {
   caloriesLast7Days: number = 0;
   caloriesLastDay: number = 0;
   caloriesToday: number = 0;
+  targetCaloriesToBeBurned: number = 0;
 
   constructor(private fitnessService: FitnessService, private router: Router) {}
 
@@ -22,6 +23,10 @@ export class FitnessComponent implements OnInit {
       this.fitnessService.getCaloriesBurnedLast7Days(this.userId).subscribe(data => this.caloriesLast7Days = data);
       this.fitnessService.getCaloriesBurnedLastDay(this.userId).subscribe(data => this.caloriesLastDay = data);
       this.fitnessService.getCaloriesBurnedToday(this.userId).subscribe(data => this.caloriesToday = data);
+
+      this.fitnessService.getCaloriesToBeBurned().subscribe((response: any) => {
+        this.targetCaloriesToBeBurned = response.caloriesToBeBurned;
+      });
     }
   }
 
@@ -30,6 +35,18 @@ export class FitnessComponent implements OnInit {
   }
 
   showActivityHistory(): void {
-    // Logic to show activity history
+    this.router.navigate(['/activity-details']);
+  }
+
+  calculateProgress(caloriesBurned: number): number {
+    return (caloriesBurned / this.targetCaloriesToBeBurned) * 100;
+  }
+
+  calculateProgress7days(caloriesBurned: number): number {
+    return (caloriesBurned / (this.targetCaloriesToBeBurned*7)) * 100;
+  }
+
+  calculateProgress30days(caloriesBurned: number): number {
+    return (caloriesBurned / (this.targetCaloriesToBeBurned*30)) * 100;
   }
 }

@@ -19,7 +19,6 @@
 #logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
 #
 #spring.cloud.gateway.discovery.locator.enabled=true
-
 spring:
   application:
     name: WellnessHub
@@ -31,6 +30,10 @@ spring:
             uri: http://localhost:8082
             predicates:
               - Path=/DietPlanner/**
+          - id: fitness
+            uri: http://localhost:8083
+            predicates:
+              - Path=/fitness/**
   datasource:
     url: jdbc:mysql://localhost:3306/wellnesshub
     username: root

@@ -7,6 +7,7 @@ import { AuthGuard } from './auth.guard';
 import { HomeComponent } from './home/home.component';
 import { MealDetailsComponent } from './meal-details/meal-details.component';
 import { AddActivityComponent } from './add-activity/add-activity.component';
+import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'add-activity', component: AddActivityComponent },
+  { path: 'activity-details', component: ActivityDetailsComponent },
   { path: 'meal-details/:mealType', component: MealDetailsComponent },
   { path: '**', redirectTo: '' }
 ];

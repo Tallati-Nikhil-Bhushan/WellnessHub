@@ -30,7 +30,7 @@ export class MealDetailsComponent implements OnInit {
 
 
   fetchMealDetails(mealType: string, calories: number, dietaryPreference: string): void {
-    this.http.get(`http://localhost:8082/DietPlanner/api/diets/meals/${mealType}`, {
+    this.http.get(`http://localhost:8081/DietPlanner/api/diets/meals/${mealType}`, {
       params: {
         calories: calories.toString(),
         dietaryPreference: dietaryPreference

@@ -18,6 +18,8 @@ import { FitnessComponent } from './fitness/fitness.component';
 import { MentalHealthComponent } from './mental-health/mental-health.component';
 import { AddActivityComponent } from './add-activity/add-activity.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ActivityDetailsComponent } from './activity-details/activity-details.component';
+import { FoodlogComponent } from './foodlog/foodlog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -35,7 +37,9 @@ export function tokenGetter() {
     MealDetailsComponent,
     FitnessComponent,
     MentalHealthComponent,
-    AddActivityComponent
+    AddActivityComponent,
+    ActivityDetailsComponent,
+    FoodlogComponent
   ],
   imports: [
     NgSelectModule,
