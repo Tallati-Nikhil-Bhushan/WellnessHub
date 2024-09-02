@@ -8,4 +8,9 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+
+  contentId = 0
+  changeDashboardContent(index: number){
+    this.contentId = index
+  }
 }

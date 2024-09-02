@@ -1,6 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-    background-color: #f4f4f4; /* Fallback background color */
+    background-color: #CAF0F8; /* Fallback background color */
+}
+:root{
+    --light-green: #CAF0F8;
+    --leaf-green: #0077B6;
+    --faded-green: #00B4D8;
+    --dark-green: #03045E;
+    --light-warn: #e44848;
+    --dark-warn: #b43636;
 }
 
 /* Global styling for ng-select dropdown panel */

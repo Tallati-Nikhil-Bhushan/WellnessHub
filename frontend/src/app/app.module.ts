@@ -20,6 +20,12 @@ import { AddActivityComponent } from './add-activity/add-activity.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ActivityDetailsComponent } from './activity-details/activity-details.component';
 import { FoodlogComponent } from './foodlog/foodlog.component';
+import { Phq9Component } from './phq9/phq9.component';
+import { LandComponent } from './land/land.component';
+import { Gad7Component } from './gad7/gad7.component';
+import { DepressionDialogComponent } from './depression-dialog/depression-dialog.component';
+import { ArticlesBlogComponent } from './articles-blog/articles-blog.component';
+import { AnxietyDialogComponent } from './anxiety-dialog/anxiety-dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -39,7 +45,13 @@ export function tokenGetter() {
     MentalHealthComponent,
     AddActivityComponent,
     ActivityDetailsComponent,
-    FoodlogComponent
+    FoodlogComponent,
+    Phq9Component,
+    LandComponent,
+    Gad7Component,
+    DepressionDialogComponent,
+    ArticlesBlogComponent,
+    AnxietyDialogComponent
   ],
   imports: [
     NgSelectModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DietService } from '../diet.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-diet',
@@ -18,7 +19,7 @@ export class DietComponent implements OnInit {
     Snacks: false
   };
 
-  constructor(private dietService: DietService, private router: Router) {}
+  constructor(private dietService: DietService, private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.getCaloriesData();
@@ -39,18 +40,34 @@ export class DietComponent implements OnInit {
   }
 
   navigateToMealDetails(mealType: string): void {
-    const calories = this.mealCalories[mealType];
+    const calories = this.mealCalories[mealType].toString();
     const dietaryPreference = this.vegPreference[mealType] ? 'vegetarian' : '';
 
-    this.router.navigate(['/meal-details', mealType], {
-      queryParams: {
-        calories: calories,
-        dietaryPreference: dietaryPreference
-      }
-    });
+    if (mealType) {
+      this.fetchMealDetails(mealType, calories, dietaryPreference);
+    }
   }
 
   toggleVegetarian(mealType: string): void {
     this.vegPreference[mealType] = !this.vegPreference[mealType];
+  }
+
+  mealDetailsHtml: string | undefined;
+
+  fetchMealDetails(mealType: string, calories: string, dietaryPreference: string): void {
+    this.http.get(`http://localhost:8081/DietPlanner/api/diets/meals/${mealType}`, {
+      params: {
+        calories: calories.toString(),
+        dietaryPreference: dietaryPreference
+      },
+      responseType: 'text'  // Expecting plain text (HTML) response
+    }).subscribe(
+      response => {
+        this.mealDetailsHtml = response;
+      },
+      error => {
+        console.error('Error fetching meal details', error);
+      }
+    );
   }
 }

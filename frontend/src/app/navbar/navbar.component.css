@@ -1,0 +1,9 @@
+nav{
+    position: fixed;
+    width: 100vw;
+    height: 60px;
+    z-index: 1000;
+}
+.navbar-nav{
+    margin: 0 20px;
+}

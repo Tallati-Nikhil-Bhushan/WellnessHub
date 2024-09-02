@@ -85,6 +85,7 @@ export class AddActivityComponent {
         this.activityType = '';
         this.duration = 0;
         this.date = '';
+        this.router.navigate(['/dashboard']);
       },
       error => {
         console.error('Error adding activity:', error);

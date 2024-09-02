@@ -15,21 +15,17 @@ export class MealDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const mealType = params.get('mealType');
-      this.route.queryParams.subscribe(queryParams => {
-        const calories = queryParams['calories'];
-        const dietaryPreference = queryParams['dietaryPreference'];
+      const mealType = localStorage.getItem('mealType') || '';
+        const calories = localStorage.getItem('calories') || ''; 
+        const dietaryPreference = localStorage.getItem('dietaryPreference') || '';
 
         if (mealType) {
           this.fetchMealDetails(mealType, calories, dietaryPreference);
         }
-      });
-    });
   }
 
 
-  fetchMealDetails(mealType: string, calories: number, dietaryPreference: string): void {
+  fetchMealDetails(mealType: string, calories: string, dietaryPreference: string): void {
     this.http.get(`http://localhost:8081/DietPlanner/api/diets/meals/${mealType}`, {
       params: {
         calories: calories.toString(),
