@@ -20,6 +20,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -40,10 +43,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    	http.cors().disable();
         http.csrf().disable()
+        .cors()
+        .and()
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/login", "/api/register", "/api/check-username","/DietPlanner/api/diets").permitAll()
+                .requestMatchers("/api/login", "/api/register", "/api/check-username","/DietPlanner/api/diets","/fitness/api/caloriesToBeBurned").permitAll()
                 .anyRequest().authenticated()
             )
             .exceptionHandling(exceptionHandling -> exceptionHandling
@@ -71,6 +75,18 @@ public class SecurityConfig {
         authProvider.setUserDetailsService(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
+    }
+    
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOriginPattern("http://localhost:4200"); // Allow all origins, you can replace "*" with your client URL
+        config.addAllowedHeader("*"); // Allow all headers
+        config.addAllowedMethod("*"); // Allow all HTTP methods (GET, POST, etc.)
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
     
 }

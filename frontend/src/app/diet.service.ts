@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DietService {
-  private apiUrl = 'http://localhost:8082/DietPlanner/api/diets';
+  private apiUrl = 'http://localhost:8081/DietPlanner/api/diets';
 
   constructor(private http: HttpClient) {}
 

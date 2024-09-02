@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ActivityService {
 
-  private apiUrl = 'http://localhost:8083/api/fitness'; // Adjust the URL as needed
+  private apiUrl = 'http://localhost:8081/fitness/api'; // Adjust the URL as needed
 
   constructor(private http: HttpClient) { }
 

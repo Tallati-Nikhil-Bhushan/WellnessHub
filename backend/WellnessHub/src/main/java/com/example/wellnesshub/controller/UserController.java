@@ -1,6 +1,7 @@
 package com.example.wellnesshub.controller;
 
 import com.example.wellnesshub.model.CalorieCalculator;
+import com.example.wellnesshub.model.CaloriesToBeBurned;
 import com.example.wellnesshub.model.Diet;
 import com.example.wellnesshub.model.User;
 import com.example.wellnesshub.service.UserService;
@@ -36,13 +37,25 @@ public class UserController {
             Map<String, String> response = new HashMap<>();
             response.put("message", "User registered successfully");
             
-            int caloriesIntake = CalorieCalculator.calculateCaloriesIntake(user);
+            int[] data = CalorieCalculator.calculateCaloriesIntake(user);
+            
+            int caloriesIntake = data[0];
+            int caloriesToBeBurned = data[1];
+            int activityLevel = data[2];
             
             Diet diet = new Diet();
             diet.setUserId(user.getId());
             diet.setCaloriesIntake(caloriesIntake); // Default value
             diet.setDietaryPreference(user.getDietaryPreference());
+            
+            CaloriesToBeBurned fitness = new CaloriesToBeBurned();
+            fitness.setUserId(user.getId());
+            fitness.setCaloriesToBeBurned(caloriesToBeBurned); // Default value
+            fitness.setActivityLevel(activityLevel);
+            
+            
             restTemplate.postForObject("http://localhost:8081/DietPlanner/api/diets", diet, Diet.class);
+            restTemplate.postForObject("http://localhost:8081/fitness/api/caloriesToBeBurned", fitness, CaloriesToBeBurned.class);
             return ResponseEntity.ok(response);
 
         } 
@@ -75,7 +88,7 @@ public class UserController {
     }
     
     @GetMapping("/protected")
-    public String protectedResource() {
-        return "This is a protected resource!";
+    public ResponseEntity<Map<String, Object>> protectedResource() {
+        return ResponseEntity.ok(Map.of("Hello", "Hello"));
     }
 }

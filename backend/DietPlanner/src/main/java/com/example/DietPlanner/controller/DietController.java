@@ -17,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/DietPlanner/api/diets")
-@CrossOrigin(origins = "http://localhost:4200")
 public class DietController {
 
     @Autowired
