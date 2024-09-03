@@ -1,5 +1,7 @@
 <div class="phq9-form">
     <h1>PHQ-9 Depression Test</h1>
+    <h4>Over the last two weeks, how often have you been bothered by any of the following problems?</h4>
+    <br>
     <form (ngSubmit)="submitForm()">
         <div class="question-container" *ngFor="let question of questions; let i = index">
             <label class="question-label">{{ i + 1 }}. {{ question }}</label>
@@ -17,7 +19,10 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="submit-button">Submit</button>
+        <div *ngIf="!isFormComplete()" class="incomplete-message">
+            Please answer all the questions before submitting the form.
+        </div>
+        <button type="submit" class="submit-button" [disabled]="!isFormComplete()">Submit</button>
     </form>
 </div>
 

@@ -39,7 +39,7 @@ export class ActivityDetailsComponent implements OnInit {
           this.noActivitiesMessage = 'No activities performed yet.';
         } else {
           this.topactivities = data;
-          console.log(this.topactivities);
+          // console.log(this.topactivities);
         }
       },
       (error) => {

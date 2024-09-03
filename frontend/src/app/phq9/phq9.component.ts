@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Phq9Service } from '../phq9.service';
 import { DepressionLevels } from '../depression-levels';
 
@@ -81,9 +81,26 @@ export class Phq9Component {
       }, (error: any) => {
         console.error('Error:', error);
       });
+
+      this.resetForm();
   }
 
+  @Output() close = new EventEmitter<void>();
+
   closeDialog() {
+    this.close.emit();
+
+  }
+
+  isFormComplete(): boolean {
+    return this.answers.every(option => option !== null);
+  }
+
+  resetForm() {
+    // Reset the form fields and component state to initial values
+    this.answers = Array(this.questions.length).fill(null);
     this.showDialog = false;
+    this.depressionLevel = '';
+    this.depressionMessage = '';
   }
 }

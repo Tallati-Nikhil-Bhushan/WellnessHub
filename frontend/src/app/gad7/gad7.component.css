@@ -127,3 +127,9 @@
     background: #2a5a8b;
     transform: translateY(0);
 }
+
+.incomplete-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
